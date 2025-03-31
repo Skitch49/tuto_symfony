@@ -3,9 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\RecipeRepository;
+use App\Validator\BanWord;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
+#[UniqueEntity('title',message:'Ce titre est déjà utilisé.')]
+#[UniqueEntity('slug',message:'Ce slug est déjà utilisé.')]
 class Recipe
 {
     #[ORM\Id]
@@ -14,9 +19,16 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 5,
+        minMessage: 'Votre titre est trop court.',
+    )]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5, minMessage: 'Votre slug est trop court.')]
+    #[Assert\Regex("/^[a-z0-9]+(?:-[a-z0-9]+)*$/i", message: 'Votre slug est invalide.')]
+    #[BanWord()]
     private ?string $slug = null;
 
     #[ORM\Column(type: 'text')]
@@ -29,6 +41,9 @@ class Recipe
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank()] // Pour que la valeur ne soit pas null
+    #[Assert\Positive(message: 'Votre durée doit être positive.')]
+    #[Assert\LessThan(value:1440,message:'Votre durée dépasse les 24h !')]
     private ?int $duration = null;
 
     public function getId(): ?int
