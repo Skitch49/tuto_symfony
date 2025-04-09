@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-		<h1>Voici toutes les recettes rapides</h1>
+	<h1>Voici toutes les recettes rapides</h1>
 
 	<a class='btn btn-primary' href="{{path('admin.recipe.create')}}">
 		Ajouter une recette</a>
@@ -12,6 +12,7 @@
 		<thead>
 			<tr>
 				<th>Titre</th>
+				<th>Categorie</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -20,6 +21,9 @@
 				<tr>
 					<td>
 						{{recipe.title}}
+					</td>
+					<td>
+						{{recipe.category.name | default('Aucune catégorie associée !')}}
 					</td>
 					<td>
 						<div class="d-flex gap-1">
