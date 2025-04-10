@@ -33,6 +33,25 @@
 					<li class="nav-item">
 						<a class="nav-link {{ app.current_route starts with 'admin.category.' ? 'active' : ''}}" href="{{ path('admin.category.index') }}">Catégories</a>
 					</li>
+					{% if is_granted('ROLE_USER') %}
+						<li class="nav-item">
+							<a class="nav-link {{ app.current_route == 'profil' ? 'active' : ''}}" href="{{ path('profil') }}">
+								{{ app.user.username }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('logout') }}">
+								Se déconnecter
+							</a>
+						</li>
+
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link {{ app.current_route == 'login' ? 'active' : ''}}" href="{{ path('login') }}">Se connecter</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {{ app.current_route == 'register' ? 'active' : ''}}" href="{{ path('register') }}">S'inscrire</a>
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 		</nav>

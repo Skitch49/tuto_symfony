@@ -6,4 +6,11 @@
 {% block body %}
 
 	Accueil
+
+{% if user %}
+    <p>Bienvenue {{ user.username }}</p>
+{% else %}
+    <p>Bienvenue visiteur !</p>
+{% endif %}
+
 {% endblock %}

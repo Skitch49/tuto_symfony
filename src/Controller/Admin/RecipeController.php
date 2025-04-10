@@ -12,13 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/recipe', name:'admin.recipe.')]
+#[IsGranted('ROLE_USER')] // Accede si on a le role user
 final class RecipeController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(RecipeRepository $repository): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $recipes = $repository->findWithDurationLowerThan(30);
         $totalTime = $repository->findTotalDuration();
         return $this->render('admin/recipe/index.html.twig', ['recipes' => $recipes, 'totalTime' => $totalTime]);
