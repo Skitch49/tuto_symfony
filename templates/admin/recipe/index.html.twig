@@ -11,14 +11,16 @@
 	<table class='table'>
 		<thead>
 			<tr>
-				<th>Titre</th>
-				<th>Categorie</th>
+				<th>{{knp_pagination_sortable(recipes,'ID','r.id')}}</th>
+				<th>{{knp_pagination_sortable(recipes,'Titre','r.title')}}</th>
+				<th>{{knp_pagination_sortable(recipes,'Catégorie','c.name')}}</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for recipe in recipes %}
 				<tr>
+					<td>{{recipe.id}}</td>
 					<td>
 						{{recipe.title}}
 					</td>
@@ -41,7 +43,19 @@
 		</tbody>
 	</table>
 
-	<p>Plus de
-		{{totalTime}}
-		min de recettes</p>
+
+	{{knp_pagination_render(recipes) }}
+
+{#  Ou pagination sans bundle #}
+	{# <div class="d-flex">
+			{% if page > 1 %}
+				<a href="{{ path('admin.recipe.index', {page: page - 1})}}" class="btn btn-secondary">Page précédente</a>
+	
+			{% endif %}
+	
+			{% if page < maxPage %}
+				<a href="{{ path('admin.recipe.index', {page: page + 1})}}" class="btn btn-secondary">Page suivante</a>
+			{% endif %}
+	
+		</div> #}
 {% endblock %}

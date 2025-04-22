@@ -37,7 +37,7 @@ class Category
     /**
      * @var Collection<int, Recipe>
      */
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category')]
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'category',cascade:['remove'])] // Suppression en cascade supprime les category et les relations associer
     private Collection $recipes;
 
     public function __construct()

@@ -11,7 +11,7 @@ final class BanWord extends Constraint
     // You can use #[HasNamedArguments] to make some constraint options required.
     // All configurable options must be passed to the constructor.
     public function __construct(
-        public string $message = 'Le champ contient le mot banni "{{ banWord }}"',
+        public string $message = 'Le champ contient le mot banni "{{ banWord }}".',
         public array $banWords = ['spam','viagra'],
         ?array $groups = null,
         mixed $payload = null
